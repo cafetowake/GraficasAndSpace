@@ -22,10 +22,10 @@ impl Camera {
             rotation_y: 0.0,
             scale: 1.0,
             auto_rotate: false,
-            position: Vector3::new(0.0, 0.0, 5.0),
+            position: Vector3::new(0.0, 0.0, 400.0),
             target: Vector3::new(0.0, 0.0, 0.0),
             up: Vector3::new(0.0, 1.0, 0.0),
-            fov: PI / 4.0, // 45 degrees
+            fov: PI / 4.0, 
             aspect_ratio: width / height,
             near_plane: 0.1,
             far_plane: 1000.0,
@@ -37,7 +37,7 @@ impl Camera {
         self.rotation_y = 0.0;
         self.scale = 1.0;
         self.auto_rotate = false;
-        self.position = Vector3::new(0.0, 0.0, 5.0);
+        self.position = Vector3::new(0.0, 0.0, 400.0);
         self.target = Vector3::new(0.0, 0.0, 0.0);
     }
     
@@ -81,19 +81,16 @@ impl Camera {
         let point = Point3::from(*vertex);
         let transformed = mvp * point.to_homogeneous();
         
-        // Perspective divide
         if transformed.w != 0.0 {
             let ndc_x = transformed.x / transformed.w;
             let ndc_y = transformed.y / transformed.w;
             let ndc_z = transformed.z / transformed.w;
             
-            // Convert to screen coordinates
             let screen_x = (ndc_x + 1.0) * 0.5 * screen_width;
-            let screen_y = (1.0 - ndc_y) * 0.5 * screen_height; // Flip Y-axis
+            let screen_y = (1.0 - ndc_y) * 0.5 * screen_height; 
             
             Vector3::new(screen_x, screen_y, ndc_z)
         } else {
-            // Vertex behind camera or at infinity
             Vector3::new(-1000.0, -1000.0, 1000.0)
         }
     }
@@ -114,7 +111,6 @@ impl Camera {
         self.rotation_y += delta_x;
         self.rotation_x += delta_y;
         
-        // Clamp rotation_x to prevent flipping
         self.rotation_x = self.rotation_x.clamp(-PI / 2.0 + 0.1, PI / 2.0 - 0.1);
     }
     

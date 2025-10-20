@@ -83,14 +83,14 @@ impl Renderer {
 
 fn main() {
     let (mut rl, thread) = raylib::init()
-        .size(800, 600)
-        .title("3D Model Viewer - Lab 4")
+        .size(1366, 768)
+        .title("Lab 4")
         .build();
     
     let mut model = Model::load_from_file("assets/Spaceship.obj").expect("Failed to load model");
     model.normalize(150.0);
     
-    let mut renderer = Renderer::new(800, 600);
+    let mut renderer = Renderer::new(1366, 768);
     
     println!("Controls:");
     println!("Arrow Keys: Rotate | +/-: Zoom | R: Reset | Space: Auto-rotate | W: Toggle wireframe");

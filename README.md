@@ -1,67 +1,44 @@
-# Lab 4 - 3D Model Viewer
+# Lab 4: Carga de Modelos 3D
 
-A 3D model viewer implementation in Rust featuring manual triangle rasterization and framebuffer rendering. This project loads OBJ models and renders them using software rasterization techniques.
+## Descripción
+Este proyecto es un renderizador 3D desarrollado en Rust que carga y visualiza modelos en formato OBJ. Implementa un pipeline de renderizado completo con transformaciones 3D, rasterización manual de triángulos y un sistema de cámara interactivo.
 
-## Features
+## Estructura del Proyecto
 
-- **OBJ Model Loading**: Load 3D models from Wavefront OBJ files
-- **Manual Triangle Rasterization**: Custom triangle drawing using barycentric coordinates  
-- **Framebuffer Rendering**: Software pixel manipulation with depth buffer
-- **3D Camera System**: 3D transformations with Model-View-Projection matrices
-- **Wireframe Mode**: Toggle between filled triangles and wireframe view
-- **Interactive Controls**: Real-time rotation, zoom, and auto-rotation
-
-## Controls
-
-| Key | Action |
-|--------|--------|
-| **Arrow Keys** | Rotate object |
-| **+/-** | Zoom in/out |
-| **R** | Reset position |
-| **Space** | Toggle auto-rotation |
-| **W** | Toggle wireframe mode |
-| **ESC** | Exit |
-
-## Implementation
-
-### Manual Rendering Pipeline
-- **Vertex Transformation**: 3D to 2D projection using MVP matrices
-- **Triangle Rasterization**: Barycentric coordinate-based pixel filling
-- **Depth Testing**: Z-buffer for correct triangle ordering
-- **Framebuffer**: Custom pixel buffer with manual pixel manipulation
-
-### Project Structure
 ```
 src/
-├── main.rs          # Main application and render loop
-├── obj.rs           # OBJ file loader and parser
-├── framebuffer.rs   # Custom framebuffer with depth testing
-├── triangle.rs      # Manual triangle rasterization
-├── camera.rs        # 3D camera with MVP transformations
+├── main.rs          # Bucle principal de la aplicación y gestión de ventana
+├── obj.rs           # Cargador y parser de archivos OBJ
+├── framebuffer.rs   # Implementación del framebuffer con depth buffer
+├── triangle.rs      # Rasterización manual de triángulos
+├── camera.rs        # Sistema de cámara 3D con transformaciones MVP
 assets/
-└── Spaceship.obj    # 3D model file
+└── Spaceship.obj    # Modelo 3D de una nave espacial
 ```
 
-## Usage
+## Controles
+
+| Tecla | Acción |
+|-------|--------|
+| **Teclas Direccionales** | Rotar el modelo |
+| **+/-** | Acercar/Alejar la cámara |
+| **R** | Resetear posición de la cámara |
+| **Espacio** | Alternar rotación automática |
+| **W** | Cambiar entre modo wireframe y relleno |
+| **ESC** | Salir de la aplicación |
+
+## Captura de Pantalla
+
+![Lab 4](Lab4.png)
+
+## Requisitos
+
+- Rust 2021+
+- raylib (gestión de ventanas e input)
+- nalgebra (matemáticas 3D y transformaciones)
+
+## Ejecución
 
 ```bash
 cargo run
 ```
-
-## Requirements Fulfilled
-
-✅ **OBJ Model Loading**: Loads the Spaceship.obj model  
-✅ **Manual Triangle Rendering**: Custom triangle rasterization  
-✅ **Face Processing**: Manually processes faces and vertex indices  
-✅ **Screen Positioning**: Model centered and properly sized  
-✅ **Interactive Controls**: Rotation, zoom, and wireframe toggle  
-
-## Dependencies
-
-- **Rust 2021+**
-- **raylib**: Window management and input handling
-- **nalgebra**: 3D mathematics and transformations
-
----
-
-*Lab 4 - Computer Graphics Course*
