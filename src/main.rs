@@ -1,87 +1,5 @@
-mod obj;
-mod framebuffer;
-mod triangle;
-mod camera;
-
-use obj::Model;
-use framebuffer::{Framebuffer, Color};
-use triangle::{Vertex3D, draw_triangle_filled, draw_triangle_wireframe};
-use camera::Camera;
-use raylib::prelude::*;
-
-struct Renderer {
-    framebuffer: Framebuffer,
-    camera: Camera,
-    pub show_wireframe: bool,
-}
-
-impl Renderer {
-    fn new(width: usize, height: usize) -> Self {
-        Self {
-            framebuffer: Framebuffer::new(width, height),
-            camera: Camera::new(width as f32, height as f32),
-            show_wireframe: false,
-        }
-    }
-    
-    fn clear(&mut self) {
-        self.framebuffer.clear(Color::BLACK);
-    }
-    
-    fn render_model(&mut self, model: &Model) {
-        let screen_width = self.framebuffer.width() as f32;
-        let screen_height = self.framebuffer.height() as f32;
-        
-        for face in &model.faces {
-            if face.indices.len() >= 3 {
-                let v0_world = model.vertices[face.indices[0]].position;
-                let v1_world = model.vertices[face.indices[1]].position;
-                let v2_world = model.vertices[face.indices[2]].position;
-                
-                let v0_screen = self.camera.project_vertex(&v0_world, screen_width, screen_height);
-                let v1_screen = self.camera.project_vertex(&v1_world, screen_width, screen_height);
-                let v2_screen = self.camera.project_vertex(&v2_world, screen_width, screen_height);
-                
-                if v0_screen.z > 1.0 || v1_screen.z > 1.0 || v2_screen.z > 1.0 ||
-                   v0_screen.z < -1.0 || v1_screen.z < -1.0 || v2_screen.z < -1.0 {
-                    continue;
-                }
-                
-                let vertex0 = Vertex3D::new(v0_screen, Color::YELLOW);
-                let vertex1 = Vertex3D::new(v1_screen, Color::YELLOW);
-                let vertex2 = Vertex3D::new(v2_screen, Color::YELLOW);
-                
-                if self.show_wireframe {
-                    draw_triangle_wireframe(&mut self.framebuffer, &vertex0, &vertex1, &vertex2, Color::WHITE);
-                } else {
-                    draw_triangle_filled(&mut self.framebuffer, &vertex0, &vertex1, &vertex2);
-                }
-            }
-        }
-    }
-    
-    fn render_to_raylib(&self, d: &mut RaylibDrawHandle) {
-        let buffer = self.framebuffer.buffer();
-        
-        for (i, pixel) in buffer.iter().enumerate() {
-            if pixel.r != 0 || pixel.g != 0 || pixel.b != 0 {
-                let x = (i % self.framebuffer.width()) as i32;
-                let y = (i / self.framebuffer.width()) as i32;
-                d.draw_pixel(x, y, pixel.to_raylib_color());
-            }
-        }
-    }
-    
-    fn toggle_wireframe(&mut self) {
-        self.show_wireframe = !self.show_wireframe;
-    }
-    
-    fn get_camera_mut(&mut self) -> &mut Camera {
-        &mut self.camera
-    }
-}
-
 fn main() {
+<<<<<<< HEAD
     let (mut rl, thread) = raylib::init()
         .size(1366, 768)
         .title("Lab 4")
@@ -149,4 +67,7 @@ fn main() {
         d.draw_text("Arrow Keys: Rotate | +/-: Zoom | R: Reset | Space: Auto | W: Wireframe", 
                    10, 30, 16, raylib::color::Color::LIGHTGRAY);
     }
+=======
+    println!("Hello, world!");
+>>>>>>> parent of f788439 (change)
 }

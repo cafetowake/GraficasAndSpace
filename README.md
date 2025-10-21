@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Lab 4: Carga de Modelos 3D
 
 ## Descripción
@@ -42,3 +43,6 @@ assets/
 ```bash
 cargo run
 ```
+=======
+# GraficasAndSpace
+>>>>>>> parent of f788439 (change)
