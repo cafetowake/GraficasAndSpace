@@ -50,13 +50,11 @@ pub fn generate_ring(inner_radius: f32, outer_radius: f32, segments: u32) -> (Ve
         let cos_theta = theta.cos();
         let sin_theta = theta.sin();
 
-        // Inner vertex
         vertices.push(Vertex {
             position: [cos_theta * inner_radius, 0.0, sin_theta * inner_radius],
             normal: [0.0, 1.0, 0.0],
         });
 
-        // Outer vertex
         vertices.push(Vertex {
             position: [cos_theta * outer_radius, 0.0, sin_theta * outer_radius],
             normal: [0.0, 1.0, 0.0],
