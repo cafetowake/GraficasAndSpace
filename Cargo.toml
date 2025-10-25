@@ -4,3 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+raylib = "5.0"   # Windowing and simple 3D drawing helper
+image = "0.24"   # Optional: save screenshots
+glam = "0.24.2"  # For vector and matrix math
+nalgebra = "0.32"
