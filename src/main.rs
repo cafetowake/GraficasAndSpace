@@ -14,7 +14,7 @@ use orbit::OrbitSystem;
 fn main() {
     let (mut rl, thread) = raylib::init()
         .size(1280, 720)
-        .title("GraficasAndSpace - Sistema Solar 3D")
+        .title("GraficasAndSpace - Sistema Solar 3D - Laboratorio 5")
         .build();
 
     rl.set_target_fps(60);
