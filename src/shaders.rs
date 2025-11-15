@@ -93,18 +93,36 @@ pub fn color_gas(pos_on_unit: Vector3, normal: Vector3, base: Color, time: f32) 
     let c3 = (br * 0.6 + 0.2,  bg * 0.7 + 0.1,  bb * 0.9 + 0.05);
     let c4 = (br * 0.95 + 0.02, bg * 0.9 + 0.02, bb * 0.9 + 0.02);
 
-    let bands = ((p.y * 6.0 + time * 0.6).sin() * 0.5 + 0.5).clamp(0.0, 1.0);
+    let warp1 = (p.x * 3.0 + time * 0.8).sin() * 0.3;
+    let warp2 = (p.z * 4.0 - time * 0.5).cos() * 0.2;
+    let warp3 = (p.y * 2.0 + time * 1.2).sin() * 0.15;
+
+    let warped_y = p.y + warp1 + warp2 + warp3;
+    
+
+    let bands = ((warped_y * 6.0 + time * 0.6).sin() * 0.5 + 0.5).clamp(0.0, 1.0);
 
     let mut r = c1.0 * (1.0 - bands) + c2.0 * bands;
     let mut g = c1.1 * (1.0 - bands) + c2.1 * bands;
     let mut b = c1.2 * (1.0 - bands) + c2.2 * bands;
 
-    let t2 = ((p.x * 10.0 + time * 0.5).sin() * 0.5 + 0.5) * 0.15;
+    let warped_x = p.x + (time * 0.3).sin() * 0.2;
+    let t2 = ((warped_x * 10.0 + time * 0.5).sin() * 0.5 + 0.5) * 0.15;
     r = r * (1.0 - t2) + c3.0 * t2;
     g = g * (1.0 - t2) + c3.1 * t2;
     b = b * (1.0 - t2) + c3.2 * t2;
 
-    let t3 = hash_noise(Vector3::new(p.x*8.0 + time*0.2, p.y*8.0, p.z*8.0));
+
+    let storm_center = (time * 0.4).sin() * 0.5;
+    let dist_to_storm = ((p.y - storm_center).powi(2) + (p.x * 0.5).powi(2)).sqrt();
+    let storm_intensity = (1.0 - (dist_to_storm * 5.0).min(1.0)) * 0.3;
+    
+    r = (r + storm_intensity * 0.2).clamp(0.0, 1.0);
+    g = (g + storm_intensity * 0.15).clamp(0.0, 1.0);
+    b = (b + storm_intensity * 0.1).clamp(0.0, 1.0);
+
+
+    let t3 = hash_noise(Vector3::new(p.x*8.0 + time*0.2, warped_y*8.0, p.z*8.0));
     r = r * (1.0 - 0.08) + c4.0 * 0.08 * t3;
     g = g * (1.0 - 0.08) + c4.1 * 0.08 * t3;
     b = b * (1.0 - 0.08) + c4.2 * 0.08 * t3;

@@ -4,6 +4,7 @@ mod orbit;
 mod renderer;
 mod shaders;
 mod utils;
+mod skybox;  
 
 use raylib::prelude::*;
 use camera::CameraController;
@@ -14,7 +15,7 @@ use orbit::OrbitSystem;
 fn main() {
     let (mut rl, thread) = raylib::init()
         .size(1280, 720)
-        .title("GraficasAndSpace - Sistema Solar 3D - Laboratorio 5")
+        .title("GraficasAndSpace - Sistema Solar 3D - Proyecto 3")
         .build();
 
     rl.set_target_fps(60);
@@ -60,6 +61,7 @@ fn main() {
         if show_ui {
             d.draw_text("Controles: A/D rotar cam | W/S zoom | R toggle rot | G toggle grid | U toggle UI", 10, 10, 14, Color::RAYWHITE);
             d.draw_text(&format!("Tiempo: {:.2}s", orbits.time), 10, 28, 12, Color::LIGHTGRAY);
+            d.draw_text("Warping: Activo en gigantes gaseosos | Skybox: 800 estrellas", 10, 46, 12, Color::LIGHTGRAY);
         }
     }
 }
