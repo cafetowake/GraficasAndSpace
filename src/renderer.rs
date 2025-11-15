@@ -1,17 +1,10 @@
 use raylib::prelude::*;
 use crate::planet::{Planet};
-use crate::skybox::Skybox;
 
-pub struct Renderer {
-    skybox: Skybox,
-}
+pub struct Renderer;
 
 impl Renderer {
-    pub fn new() -> Self { 
-        Self {
-            skybox: Skybox::new(),
-        }
-    }
+    pub fn new() -> Self { Self }
 
     fn draw_orbit_circle(d: &mut RaylibMode3D<RaylibDrawHandle>, center: Vector3, r: f32) {
         let segments = 128;
@@ -40,11 +33,6 @@ impl Renderer {
 
     pub fn render_scene(&mut self, d: &mut RaylibMode3D<RaylibDrawHandle>, planets: &[Planet], time: f32, show_grid: bool, camera_pos: Vector3) {
         let sun_pos = Vector3::zero();
-        
-
-        self.skybox.render(d, camera_pos);
-        
-
         if show_grid {
             for i in -20..=20 {
                 let start = Vector3::new(i as f32, 0.0, -20.0);
@@ -56,18 +44,14 @@ impl Renderer {
             }
         }
 
-
-        let pulse = (time * 2.0).sin() * 0.1 + 1.0;
         let sun_col = Color::new(255, 230, 110, 255);
-        d.draw_sphere(sun_pos, 2.8 * pulse, sun_col);
+        d.draw_sphere(sun_pos, 2.8, sun_col);
         let halo_col = Color::new(255, 240, 200, 60);
-        d.draw_sphere(sun_pos, 3.8 * pulse, halo_col);
-
+        d.draw_sphere(sun_pos, 3.8, halo_col);
 
         for p in planets {
             Self::draw_orbit_circle(d, Vector3::zero(), p.orbit_radius);
         }
-
 
         for p in planets.iter() {
             let pos = p.position();
